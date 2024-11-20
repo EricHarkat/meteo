@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisation météo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Données météo</h1>
+    <canvas id="temperatureChart" width="400" height="200"></canvas>
+    <canvas id="humidityChart" width="400" height="200"></canvas>
+
+    <script>
+        // Récupérer les données du backend
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(d => new Date(d.timestamp).toLocaleString());
+                const temperatures = data.map(d => d.temperature);
+                const humidity = data.map(d => d.humidity);
+
+                // Température
+                new Chart(document.getElementById('temperatureChart'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Température (°C)',
+                            data: temperatures,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            fill: false,
+                        }]
+                    },
+                });
+
+                // Humidité
+                new Chart(document.getElementById('humidityChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Humidité (%)',
+                            data: humidity,
+                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        }]
+                    },
+                });
+            });
+    </script>
+</body>
+</html>
