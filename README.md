@@ -57,7 +57,7 @@
 
 ---
 
-## Outils à utiliser
+## Outils utiliser
 
 ### Langage
 - **JavaScript**
